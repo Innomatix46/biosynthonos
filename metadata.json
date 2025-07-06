@@ -1,0 +1,8 @@
+{
+  "name": "BioSynthonos: Virtual Athlete Simulator",
+  "description": "A predictive simulation model to forecast physiological, metabolic, and hormonal changes based on nutrition and supplement protocols. It acts as a 'virtual athlete' to help optimize for physique and health goals.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "prompt": ""
+}

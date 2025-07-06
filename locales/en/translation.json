@@ -1,0 +1,279 @@
+
+
+{
+  "common": {
+    "none": "None"
+  },
+  "header": {
+    "title": "BioSynthonos",
+    "subtitle": "Virtual Athlete Simulator"
+  },
+  "actions": {
+    "suggest_protocol": "Suggest Protocol",
+    "suggesting": "Optimizing...",
+    "run_simulation": "Run Simulation",
+    "clear_simulations": "Clear Simulations"
+  },
+  "disclaimer": {
+    "title": "Important Disclaimer",
+    "text": "\"BioSynthonos\" is a theoretical modeling tool for informational and educational purposes only. The simulations are based on a deterministic, rule-based engine and do not constitute medical advice. The use of performance-enhancing substances carries significant health risks. Always consult with a qualified healthcare professional before making any decisions regarding your health, diet, or training. The creators of this tool are not liable for any actions taken based on its output."
+  },
+  "forms": {
+    "profile": {
+      "title": "Athlete Profile",
+      "age": "Age",
+      "gender": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "weight": "Weight (kg)",
+      "bfp": "Body Fat (%)",
+      "experience": "Experience Level",
+      "goal": "Primary Goal",
+      "bloodwork_title": "Baseline Blood Work",
+      "bloodwork_subtitle": "Or manually enter your pre-cycle blood work to calibrate the simulation.",
+      "genetics": "Genetic Factors",
+      "history": "Medical History / Notes",
+      "history_placeholder": "e.g., family history of heart disease, pre-existing high blood pressure..."
+    },
+    "nutrition": {
+      "title": "Nutrition & Health Supplements",
+      "calories": "Calories (kcal)",
+      "protein": "Protein (g)",
+      "carbs": "Carbs (g)",
+      "fat": "Fat (g)",
+      "supplements": "Health Supplements"
+    },
+    "designer": {
+      "title": "Protocol Designer",
+      "total_duration": "Total",
+      "weeks": "weeks",
+      "phase_num": "Phase {{num}}",
+      "phase_name": "Phase Name",
+      "new_phase_name": "New Phase",
+      "add_compound_button": "Add Compound to Phase",
+      "add_phase_button": "Add Protocol Phase (e.g., for Blast & Cruise)"
+    },
+    "support": {
+      "title": "On-Cycle Support (AIs/BP Meds)",
+      "add_button": "Add Support Compound"
+    },
+    "pct": {
+      "title": "Post-Cycle Therapy (PCT)",
+      "add_button": "Add PCT Compound"
+    },
+    "common": {
+      "compound_num": "Compound #{{num}}",
+      "dosage": "Dosage (mg)",
+      "dosage_daily": "Dosage (mg/day)",
+      "frequency": "Frequency",
+      "duration_weeks": "Duration (weeks)"
+    }
+  },
+  "profiles": {
+    "title": "Profile Management",
+    "load": "Load Profile",
+    "aria_load": "Select a profile to load",
+    "aria_delete": "Delete selected profile",
+    "save_button": "Save Current Profile",
+    "prompt_name": "Enter a name for this profile:",
+    "alert_saved": "Profile \"{{name}}\" saved!",
+    "alert_delete_default": "The Default profile cannot be deleted.",
+    "confirm_delete": "Are you sure you want to delete the profile \"{{name}}\"? This action cannot be undone.",
+    "suggestion_applied": "AI protocol suggestion applied!"
+  },
+  "results": {
+    "welcome_title": "BioSynthonos is Ready",
+    "welcome_subtitle": "Your virtual athlete awaits. Configure the protocol on the left and click \"Run Simulation\" to generate an instantaneous, deterministic analysis.",
+    "main_title": "Simulation for a {{age}}yo {{gender}}",
+    "snapshot_title": "Protocol Snapshot",
+    "phase": "Phase {{index}} ({{name}})",
+    "weeks": "{{count}}w",
+    "support": "Support",
+    "pct": "PCT",
+    "total_duration": "Total Duration",
+    "summary_title": "Summary & Outlook",
+    "risk_assessment_title": "Health Risk Assessment",
+    "physique_title": "Physique Projection",
+    "physique": {
+      "muscle": "Muscle",
+      "fat": "Fat"
+    },
+    "blood_chart_title": "Key Blood Marker Progression",
+    "blood_panel_title": "Full Blood Panel",
+    "blood_panel": {
+      "marker": "Marker",
+      "start": "Start",
+      "peak": "Peak / Trough",
+      "end": "End"
+    },
+    "ai_title": "AI Deep Dive",
+    "ai_button": "Get Deeper AI Analysis",
+    "ai_loading": "AI is thinking...",
+    "warnings_title": "Warnings & Risks",
+    "recommendations_title": "Recommendations",
+    "pct_starts": "PCT Starts"
+  },
+  "risk": {
+    "cardio": "Cardiovascular",
+    "hepatic": "Hepatic (Liver)",
+    "renal": "Renal (Kidney)",
+    "endocrine": "Endocrine Disruption",
+    "summary": {
+      "manageable": "with manageable health risks during the cycle.",
+      "significant": "but this carries <bold>significant health risks</bold> that will peak mid-cycle.",
+      "critical": "but this comes at the cost of <bold>critical health risks</bold> during the peak of the cycle."
+    }
+  },
+  "physique": {
+    "gain_and_lose": "gain {{muscleGain}} kg of muscle and lose {{fatLoss}} kg of fat",
+    "gain": "gain {{muscleGain}} kg of muscle",
+    "lose": "lose {{fatLoss}} kg of fat",
+    "maintain": "maintain current composition"
+  },
+  "synthesis": {
+    "summary": "Over this {{duration}}-week protocol and subsequent PCT, the simulation projects you could {{physique, nested}}. The model indicates that your health markers will be most impacted mid-cycle, {{risk, nested}} A recovery phase is crucial.",
+    "long_term_outlook": "Continued use of such protocols without extended breaks will likely lead to chronic cardiovascular strain and potential permanent endocrine changes. The recovery phase post-PCT is as important as the cycle itself. Regular, comprehensive health screenings are critical to mitigate long-term risks.",
+    "warnings": {
+      "cardio": "<bold>Peak Cardiovascular Risk:</bold> At its peak, this cycle will severely impact your lipid profile (HDL/LDL) and likely increase blood pressure, placing significant strain on your cardiovascular system. This risk is amplified by your genetic predispositions.",
+      "hepatic": "<bold>Peak Liver Strain:</bold> The selected compounds will cause significant liver strain, with liver enzymes (ALT/AST) predicted to be highly elevated, especially if oral steroids are used.",
+      "renal": "<bold>Renal Strain:</bold> The protocol places a notable strain on the kidneys, indicated by a drop in eGFR. Long-term monitoring is crucial.",
+      "endocrine": "<bold>Severe HPTA Shutdown:</bold> Your natural testosterone production will be completely shut down during the cycle. The simulation shows a recovery period is essential, but full recovery is not guaranteed and depends on a proper PCT.",
+      "hair_loss": "<bold>High Hair Loss Risk:</bold> Due to your genetic sensitivity and the high androgenic load of this protocol, there is a significant risk of accelerating male pattern baldness.",
+      "general": "<bold>General Well-being:</bold> While peak risks appear moderate, any use of anabolic substances carries long-term health implications. Consistent monitoring throughout the cycle and PCT is key."
+    },
+    "recommendations": {
+      "cardio": "<bold>Cardiovascular Support:</bold> To mitigate severe lipid damage, high-dose Omega-3s (3-4g EPA/DHA daily) and Citrus Bergamot are strongly recommended throughout the cycle.",
+      "cardio_missing": "<bold>Cardiovascular Support:</bold> To mitigate severe lipid damage, high-dose Omega-3s (3-4g EPA/DHA daily) and Citrus Bergamot are strongly recommended throughout the cycle. You are <bold>not</bold> currently taking Omega-3s.",
+      "hepatic": "<bold>Liver Protection:</bold> TUDCA and NAC are essential to protect your liver, starting from week 1. Do not neglect this.",
+      "hepatic_missing": "<bold>Liver Protection:</bold> TUDCA and NAC are essential to protect your liver, starting from week 1. Do not neglect this. You are currently taking <bold>neither</bold> of these critical supports.",
+      "pct_missing": "<bold>Post-Cycle Therapy:</bold> You have not defined a PCT. This is <bold>extremely risky</bold>. A proper PCT with a SERM (like Nolvadex or Clomid) is critical to help restart your natural hormone production.",
+      "pct_defined": "<bold>Post-Cycle Therapy:</bold> Follow your defined PCT protocol strictly. Post-cycle blood work (4-6 weeks after PCT ends) is non-negotiable to confirm hormonal recovery.",
+      "monitoring": "<bold>Monitoring:</bold> Get blood work done before the cycle, mid-cycle (around week 6-8), and after PCT to track these predictions against reality and adjust accordingly."
+    }
+  },
+  "bloodMarkers": {
+    "systolicBP": "Systolic BP",
+    "diastolicBP": "Diastolic BP",
+    "glucose": "Glucose",
+    "totalTestosterone": "Total Test",
+    "totalTestosterone_short": "Test (ng/dL)",
+    "hdl": "HDL-C",
+    "hdl_short": "HDL (mg/dL)",
+    "ldl": "LDL-C",
+    "alt": "ALT",
+    "alt_short": "ALT (U/L)",
+    "ast": "AST",
+    "egfr": "eGFR",
+    "egfr_short": "eGFR"
+  },
+  "goals": {
+    "aggressive_bulk": "Aggressive Muscle Gain (Bulk)",
+    "lean_gain": "Lean Muscle Gain",
+    "recomposition": "Maintenance / Recomposition",
+    "moderate_cut": "Moderate Fat Loss (Cut)",
+    "aggressive_shred": "Aggressive Fat Loss (Shred)",
+    "competition_prep": "Competition Preparation",
+    "anti_aging": "Anti-Aging / TRT"
+  },
+  "experience": {
+    "beginner": "Beginner (< 1 year experience)",
+    "intermediate": "Intermediate (1-3 years)",
+    "expert": "Expert (3+ years)"
+  },
+  "genetics": {
+    "cardio_risk": "Cardiovascular Disease Risk",
+    "aromatization": "High Aromatization Tendency",
+    "alopecia": "Androgenic Alopecia Sensitivity",
+    "lipid_response": "Poor Lipid Response"
+  },
+  "supplements": {
+    "creatine": "Creatine Monohydrate",
+    "omega3": "Omega-3 (Fish Oil)",
+    "d3": "Vitamin D3",
+    "whey": "Whey Protein",
+    "glutamine": "L-Glutamine",
+    "nac": "N-Acetylcysteine (NAC)",
+    "tudca": "TUDCA",
+    "bergamot": "Citrus Bergamot",
+    "coq10": "Coenzyme Q10",
+    "ashwagandha": "Ashwagandha",
+    "berberine": "Berberine"
+  },
+  "frequency": {
+    "daily": "Daily",
+    "eod": "Every Other Day",
+    "e3d": "Every 3 Days",
+    "weekly": "Weekly",
+    "bi_weekly": "Bi-Weekly"
+  },
+  "errors": {
+    "title": "Error",
+    "unknown_simulation": "An unknown error occurred during simulation.",
+    "simulation_failed_prefix": "Simulation Failed:",
+    "ai_invalid_suggestion": "The AI returned an invalid or empty suggestion. Please try again.",
+    "unknown_suggestion": "An unknown error occurred while fetching the suggestion.",
+    "suggestion_failed_prefix": "Suggestion Failed:",
+    "ai_api_key_invalid": "### AI Analysis Failed\n\n**Error:** The provided API Key is invalid or missing. Please ensure it is correctly configured in the application's environment variables.",
+    "ai_analysis_failed": "### AI Analysis Failed\n\n**Error:** Could not retrieve analysis from the AI model. The service may be unavailable, the request may have been blocked, or there was a configuration issue. Check the browser console for more details.",
+    "ai_api_key_invalid_suggestion": "The AI API Key is invalid. Please check your configuration.",
+    "ai_suggestion_failed": "Could not retrieve suggestion from the AI model. The service may be unavailable or blocked."
+  },
+  "ageGate": {
+    "title": "Age Verification",
+    "disclaimer": "This tool simulates complex physiological responses to pharmacological protocols for scientific and educational purposes only. The content is intended for a mature, adult audience and deals with topics that may not be suitable for all ages.",
+    "confirmationQuestion": "Do you confirm that you are 18 years of age or older?",
+    "confirmButton": "I am 18 or older",
+    "exitButton": "Leave"
+  },
+  "share": {
+    "download": "Download as PNG",
+    "download_success": "Chart downloaded successfully!",
+    "download_error": "Failed to download chart.",
+    "share_generic": "Share Chart",
+    "share_error": "Failed to share chart.",
+    "text": "Check out my BioSynthonos simulation results!",
+    "x": "Share on X",
+    "whatsapp": "Share on WhatsApp",
+    "telegram": "Share on Telegram"
+  },
+  "pdf": {
+    "export_button": "Export as PDF",
+    "exporting": "Exporting...",
+    "report_title": "Simulation Report",
+    "profile_title": "Athlete Profile",
+    "page": "Page {{pageNumber}} of {{totalPages}}",
+    "age": "Age",
+    "gender": "Gender",
+    "weight": "Weight",
+    "bfp": "Body Fat %",
+    "goal": "Goal",
+    "export_success": "PDF report exported successfully!",
+    "export_error": "Failed to export PDF report."
+  },
+  "lab_import": {
+    "button_title": "Import Lab Report (PDF/Scan)",
+    "modal_title": "Import Lab Report",
+    "upload_button": "Upload PDF or Image",
+    "scan_button": "Scan with Camera",
+    "capture_button": "Capture Photo",
+    "apply_button": "Apply to Baseline",
+    "loading": "AI is analyzing your report...",
+    "confirm_title": "Confirm Extracted Values",
+    "confirm_subtitle": "Please verify the AI-extracted data. You can edit the values before applying them. Unrecognized markers will be ignored.",
+    "table_marker": "Marker",
+    "table_value": "Value",
+    "table_unit": "Unit",
+    "unmapped": "unmapped",
+    "error_file_size": "File is too large. Please select a file smaller than 4MB.",
+    "error_file_read": "Could not read the selected file.",
+    "error_no_markers": "The AI could not find any recognizable markers in the document.",
+    "error_generic": "An unknown error occurred during the import process.",
+    "error_camera": "Could not access the camera. Please check permissions.",
+    "success_applied": "Imported lab results have been applied to your baseline."
+  },
+  "lab_history": {
+    "title": "Lab Report History",
+    "no_reports": "No imported lab reports yet.",
+    "report_loaded": "Loaded lab report from {{date}}."
+  }
+}

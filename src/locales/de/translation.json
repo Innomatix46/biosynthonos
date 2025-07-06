@@ -1,0 +1,283 @@
+
+{
+  "common": {
+    "none": "Keine"
+  },
+  "header": {
+    "title": "BioSynthonos",
+    "subtitle": "Virtueller Athleten-Simulator"
+  },
+  "actions": {
+    "suggest_protocol": "Protokoll vorschlagen",
+    "suggesting": "Optimiere...",
+    "run_simulation": "Simulation starten",
+    "clear_simulations": "Simulationen löschen"
+  },
+  "disclaimer": {
+    "title": "Wichtiger Haftungsausschluss",
+    "text": "\"BioSynthonos\" ist ein theoretisches Modellierungswerkzeug nur für Informations- und Bildungszwecke. Die Simulationen basieren auf einer deterministischen, regelbasierten Engine und stellen keine medizinische Beratung dar. Die Verwendung von leistungssteigernden Substanzen birgt erhebliche Gesundheitsrisiken. Konsultieren Sie immer einen qualifizierten Gesundheitsdienstleister, bevor Sie Entscheidungen über Ihre Gesundheit, Ernährung oder Ihr Training treffen. Die Ersteller dieses Tools haften nicht für Handlungen, die auf der Grundlage seiner Ergebnisse vorgenommen werden."
+  },
+  "forms": {
+    "profile": {
+      "title": "Athletenprofil",
+      "age": "Alter",
+      "gender": "Geschlecht",
+      "male": "Männlich",
+      "female": "Weiblich",
+      "weight": "Gewicht (kg)",
+      "bfp": "Körperfett (%)",
+      "experience": "Erfahrungslevel",
+      "goal": "Hauptziel",
+      "bloodwork_title": "Ausgangs-Blutbild (Optional)",
+      "bloodwork_subtitle": "Oder geben Sie Ihr Blutbild vor dem Zyklus ein, um die Simulation für höhere Genauigkeit zu kalibrieren.",
+      "genetics": "Genetische Faktoren",
+      "history": "Krankengeschichte / Notizen",
+      "history_placeholder": "z.B. Familiengeschichte von Herzerkrankungen, vorbestehender Bluthochdruck..."
+    },
+    "nutrition": {
+      "title": "Ernährung & Gesundheitssupplemente",
+      "calories": "Kalorien (kcal)",
+      "protein": "Protein (g)",
+      "carbs": "Kohlenhydrate (g)",
+      "fat": "Fett (g)",
+      "supplements": "Gesundheitssupplemente"
+    },
+    "designer": {
+      "title": "Protokoll-Designer",
+      "total_duration": "Gesamt",
+      "weeks": "Wochen",
+      "phase_num": "Phase {{num}}",
+      "phase_name": "Phasenname",
+      "new_phase_name": "Neue Phase",
+      "add_compound_button": "Wirkstoff zu Phase hinzufügen",
+      "add_phase_button": "Protokollphase hinzufügen (z.B. für Blast & Cruise)"
+    },
+    "support": {
+      "title": "On-Cycle Support (AIs/Blutdruck-Mittel)",
+      "add_button": "Support-Wirkstoff hinzufügen"
+    },
+    "pct": {
+      "title": "Post-Cycle-Therapie (PCT)",
+      "add_button": "PCT-Wirkstoff hinzufügen"
+    },
+    "common": {
+      "compound_num": "Wirkstoff #{{num}}",
+      "dosage": "Dosierung (mg)",
+      "dosage_daily": "Dosierung (mg/Tag)",
+      "frequency": "Frequenz",
+      "duration_weeks": "Dauer (Wochen)"
+    }
+  },
+  "profiles": {
+    "title": "Profilverwaltung",
+    "load": "Profil laden",
+    "aria_load": "Ein Profil zum Laden auswählen",
+    "aria_delete": "Ausgewähltes Profil löschen",
+    "save_button": "Aktuelles Profil speichern",
+    "prompt_name": "Geben Sie einen Namen für dieses Profil ein:",
+    "alert_saved": "Profil \"{{name}}\" gespeichert!",
+    "alert_delete_default": "Das Standardprofil kann nicht gelöscht werden.",
+    "confirm_delete": "Sind Sie sicher, dass Sie das Profil \"{{name}}\" löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "suggestion_applied": "KI-Protokollvorschlag angewendet!"
+  },
+  "results": {
+    "welcome_title": "BioSynthonos ist bereit",
+    "welcome_subtitle": "Ihr virtueller Athlet wartet. Konfigurieren Sie das Protokoll auf der linken Seite und klicken Sie auf \"Simulation starten\", um eine sofortige, deterministische Analyse zu erstellen.",
+    "main_title": "Simulation für einen {{age}}-jährigen {{gender}}",
+    "snapshot_title": "Protokoll-Übersicht",
+    "phase": "Phase {{index}} ({{name}})",
+    "weeks": "{{count}}W",
+    "support": "Support",
+    "pct": "PCT",
+    "total_duration": "Gesamtdauer",
+    "summary_title": "Zusammenfassung & Ausblick",
+    "risk_assessment_title": "Gesundheitsrisiko-Bewertung",
+    "physique_title": "Körperbau-Projektion",
+    "physique": {
+      "muscle": "Muskel",
+      "fat": "Fett"
+    },
+    "blood_chart_title": "Entwicklung der Schlüssel-Blutwerte",
+    "blood_panel_title": "Vollständiges Blutbild",
+    "blood_panel": {
+      "marker": "Marker",
+      "start": "Start",
+      "peak": "Spitze / Tief",
+      "end": "Ende"
+    },
+    "ai_title": "KI-Tiefenanalyse",
+    "ai_button": "Tiefere KI-Analyse anfordern",
+    "ai_loading": "KI denkt nach...",
+    "warnings_title": "Warnungen & Risiken",
+    "recommendations_title": "Empfehlungen",
+    "pct_starts": "PCT Start"
+  },
+  "risk": {
+    "cardio": "Kardiovaskulär",
+    "hepatic": "Hepatisch (Leber)",
+    "renal": "Renal (Niere)",
+    "endocrine": "Endokrine Störung",
+    "summary": {
+      "manageable": "mit überschaubaren Gesundheitsrisiken während des Zyklus.",
+      "significant": "birgt jedoch <bold>erhebliche Gesundheitsrisiken</bold>, die in der Zyklusmitte ihren Höhepunkt erreichen.",
+      "critical": "geht jedoch mit <bold>kritischen Gesundheitsrisiken</bold> während des Höhepunkts des Zyklus einher."
+    }
+  },
+  "physique": {
+    "gain_and_lose": "{{muscleGain}} kg Muskeln aufbauen und {{fatLoss}} kg Fett verlieren",
+    "gain": "{{muscleGain}} kg Muskeln aufbauen",
+    "lose": "{{fatLoss}} kg Fett verlieren",
+    "maintain": "aktuelle Körperzusammensetzung beibehalten"
+  },
+  "synthesis": {
+    "summary": "Über dieses {{duration}}-wöchige Protokoll und die anschließende PCT prognostiziert die Simulation, dass Sie {{physique, nested}} könnten. Das Modell zeigt an, dass Ihre Gesundheitsmarker in der Mitte des Zyklus am stärksten beeinflusst werden, {{risk, nested}} Eine Erholungsphase ist entscheidend.",
+    "long_term_outlook": "Die fortgesetzte Anwendung solcher Protokolle ohne längere Pausen führt wahrscheinlich zu chronischer kardiovaskulärer Belastung und potenziell dauerhaften endokrinen Veränderungen. Die Erholungsphase nach der PCT ist ebenso wichtig wie der Zyklus selbst. Regelmäßige, umfassende Gesundheitsuntersuchungen sind entscheidend, um Langzeitrisiken zu mindern.",
+    "warnings": {
+      "cardio": "<bold>Spitzen-Kardiovaskuläres Risiko:</bold> Auf seinem Höhepunkt wird dieser Zyklus Ihr Lipidprofil (HDL/LDL) stark beeinträchtigen und wahrscheinlich den Blutdruck erhöhen, was eine erhebliche Belastung für Ihr Herz-Kreislauf-System darstellt. Dieses Risiko wird durch Ihre genetischen Veranlagungen verstärkt.",
+      "hepatic": "<bold>Spitzen-Leberbelastung:</bold> Die ausgewählten Wirkstoffe verursachen eine erhebliche Leberbelastung, wobei die Leberenzyme (ALT/AST) voraussichtlich stark erhöht sein werden, insbesondere bei Verwendung oraler Steroide.",
+      "renal": "<bold>Nierenbelastung:</bold> Das Protokoll stellt eine merkliche Belastung für die Nieren dar, was sich in einem Abfall des eGFR zeigt. Langzeitüberwachung ist entscheidend.",
+      "endocrine": "<bold>Schwerwiegende HPTA-Unterdrückung:</bold> Ihre natürliche Testosteronproduktion wird während des Zyklus vollständig unterdrückt. Die Simulation zeigt, dass eine Erholungsphase unerlässlich ist, eine vollständige Erholung jedoch nicht garantiert ist und von einer korrekten PCT abhängt.",
+      "hair_loss": "<bold>Hohes Haarausfallrisiko:</bold> Aufgrund Ihrer genetischen Sensitivität und der hohen androgenen Last dieses Protokolls besteht ein erhebliches Risiko, den männlichen Haarausfall zu beschleunigen.",
+      "general": "<bold>Allgemeines Wohlbefinden:</bold> Obwohl die Spitzenrisiken moderat erscheinen, birgt jeder Gebrauch von anabolen Substanzen langfristige gesundheitliche Auswirkungen. Eine konsequente Überwachung während des Zyklus und der PCT ist der Schlüssel."
+    },
+    "recommendations": {
+      "cardio": "<bold>Kardiovaskuläre Unterstützung:</bold> Um schwere Lipidschäden zu mindern, werden hochdosierte Omega-3-Fettsäuren (3-4g EPA/DHA täglich) und Citrus Bergamotte während des gesamten Zyklus dringend empfohlen.",
+      "cardio_missing": "<bold>Kardiovaskuläre Unterstützung:</bold> Um schwere Lipidschäden zu mindern, werden hochdosierte Omega-3-Fettsäuren (3-4g EPA/DHA täglich) und Citrus Bergamotte dringend empfohlen. Sie nehmen derzeit <bold>keine</bold> Omega-3-Fettsäuren ein.",
+      "hepatic": "<bold>Leberschutz:</bold> TUDCA und NAC sind unerlässlich, um Ihre Leber zu schützen, beginnend ab Woche 1. Vernachlässigen Sie dies nicht.",
+      "hepatic_missing": "<bold>Leberschutz:</bold> TUDCA und NAC sind unerlässlich, um Ihre Leber zu schützen, beginnend ab Woche 1. Vernachlässigen Sie dies nicht. Sie nehmen derzeit <bold>keines</bold> dieser wichtigen Schutzmittel ein.",
+      "pct_missing": "<bold>Post-Cycle-Therapie:</bold> Sie haben keine PCT definiert. Dies ist <bold>extrem riskant</bold>. Eine korrekte PCT mit einem SERM (wie Nolvadex oder Clomid) ist entscheidend, um die Wiederherstellung Ihrer natürlichen Hormonproduktion zu unterstützen.",
+      "pct_defined": "<bold>Post-Cycle-Therapie:</bold> Befolgen Sie Ihr definiertes PCT-Protokoll strikt. Blutuntersuchungen nach der PCT (4-6 Wochen nach Ende der PCT) sind nicht verhandelbar, um die hormonelle Erholung zu bestätigen.",
+      "monitoring": "<bold>Überwachung:</bold> Lassen Sie vor dem Zyklus, in der Mitte des Zyklus (ca. Woche 6-8) und nach der PCT Blutuntersuchungen durchführen, um diese Vorhersagen mit der Realität abzugleichen und entsprechend anzupassen."
+    }
+  },
+  "bloodMarkers": {
+    "SystolicBP": "Systolischer BD",
+    "DiastolicBP": "Diastolischer BD",
+    "Glucose": "Glukose",
+    "TotalTestosterone": "Gesamt-Test.",
+    "totalTestosterone_short": "Test (ng/dL)",
+    "hdl": "HDL-C",
+    "HDL-C": "HDL-C",
+    "hdl_short": "HDL (mg/dL)",
+    "ldl": "LDL-C",
+    "LDL-C": "LDL-C",
+    "alt": "ALT",
+    "ALT": "ALT",
+    "alt_short": "ALT (U/L)",
+    "ast": "AST",
+    "AST": "AST",
+    "egfr": "eGFR",
+    "eGFR": "eGFR",
+    "egfr_short": "eGFR",
+    "Estradiol(E2)": "Östradiol (E2)",
+    "LH/FSH": "LH / FSH",
+    "Hematocrit": "Hämatokrit"
+  },
+  "goals": {
+    "aggressive_bulk": "Aggressiver Muskelaufbau (Bulk)",
+    "lean_gain": "Magerer Muskelaufbau",
+    "recomposition": "Erhaltung / Rekomposition",
+    "moderate_cut": "Moderater Fettabbau (Cut)",
+    "aggressive_shred": "Aggressiver Fettabbau (Shred)",
+    "competition_prep": "Wettkampfvorbereitung",
+    "anti_aging": "Anti-Aging / TRT"
+  },
+  "experience": {
+    "beginner": "Anfänger (< 1 Jahr Erfahrung)",
+    "intermediate": "Fortgeschritten (1-3 Jahre)",
+    "expert": "Experte (3+ Jahre)"
+  },
+  "genetics": {
+    "cardio_risk": "Kardiovaskuläres Krankheitsrisiko",
+    "aromatization": "Hohe Aromatase-Neigung",
+    "alopecia": "Androgenetische Alopezie-Empfindlichkeit",
+    "lipid_response": "Schlechte Lipidreaktion"
+  },
+  "supplements": {
+    "creatine": "Kreatin-Monohydrat",
+    "omega3": "Omega-3 (Fischöl)",
+    "d3": "Vitamin D3",
+    "whey": "Whey Protein",
+    "glutamine": "L-Glutamin",
+    "nac": "N-Acetylcystein (NAC)",
+    "tudca": "TUDCA",
+    "bergamot": "Citrus Bergamotte",
+    "coq10": "Coenzym Q10",
+    "ashwagandha": "Ashwagandha",
+    "berberine": "Berberin"
+  },
+  "frequency": {
+    "daily": "Täglich",
+    "eod": "Jeden zweiten Tag",
+    "e3d": "Alle 3 Tage",
+    "weekly": "Wöchentlich",
+    "bi_weekly": "Alle zwei Wochen"
+  },
+  "errors": {
+    "title": "Fehler",
+    "unknown_simulation": "Ein unbekannter Fehler ist während der Simulation aufgetreten.",
+    "simulation_failed_prefix": "Simulation fehlgeschlagen:",
+    "ai_invalid_suggestion": "Die KI hat einen ungültigen oder leeren Vorschlag zurückgegeben. Bitte versuchen Sie es erneut.",
+    "unknown_suggestion": "Ein unbekannter Fehler ist beim Abrufen des Vorschlags aufgetreten.",
+    "suggestion_failed_prefix": "Vorschlag fehlgeschlagen:",
+    "ai_api_key_invalid": "### KI-Analyse fehlgeschlagen\n\n**Fehler:** Der bereitgestellte API-Schlüssel ist ungültig oder fehlt. Bitte stellen Sie sicher, dass er korrekt in den Umgebungsvariablen der Anwendung konfiguriert ist.",
+    "ai_analysis_failed": "### KI-Analyse fehlgeschlagen\n\n**Fehler:** Die Analyse konnte nicht vom KI-Modell abgerufen werden. Der Dienst ist möglicherweise nicht verfügbar, die Anfrage wurde möglicherweise blockiert oder es gab ein Konfigurationsproblem. Überprüfen Sie die Browser-Konsole für weitere Details.",
+    "ai_api_key_invalid_suggestion": "Der KI-API-Schlüssel ist ungültig. Bitte überprüfen Sie Ihre Konfiguration.",
+    "ai_suggestion_failed": "Der Vorschlag konnte nicht vom KI-Modell abgerufen werden. Der Dienst ist möglicherweise nicht verfügbar oder blockiert."
+  },
+  "ageGate": {
+    "title": "Altersüberprüfung",
+    "disclaimer": "Dieses Tool simuliert komplexe physiologische Reaktionen auf pharmakologische Protokolle ausschließlich für wissenschaftliche und Bildungszwecke. Der Inhalt richtet sich an ein erwachsenes Publikum und behandelt Themen, die möglicherweise nicht für alle Altersgruppen geeignet sind.",
+    "confirmationQuestion": "Bestätigen Sie, dass Sie 18 Jahre oder älter sind?",
+    "confirmButton": "Ich bin 18 oder älter",
+    "exitButton": "Verlassen"
+  },
+  "share": {
+    "download": "Als PNG herunterladen",
+    "download_success": "Diagramm erfolgreich heruntergeladen!",
+    "download_error": "Fehler beim Herunterladen des Diagramms.",
+    "share_generic": "Diagramm teilen",
+    "share_error": "Fehler beim Teilen des Diagramms.",
+    "text": "Schau dir meine BioSynthonos-Simulationsergebnisse an!"
+  },
+  "pdf": {
+    "export_button": "Als PDF exportieren",
+    "exporting": "Exportiere...",
+    "report_title": "Simulationsbericht",
+    "profile_title": "Athletenprofil",
+    "page": "Seite {{pageNumber}} von {{totalPages}}",
+    "age": "Alter",
+    "gender": "Geschlecht",
+    "weight": "Gewicht",
+    "bfp": "Körperfett %",
+    "goal": "Ziel",
+    "export_success": "PDF-Bericht erfolgreich exportiert!",
+    "export_error": "Fehler beim Exportieren des PDF-Berichts."
+  },
+    "lab_import": {
+    "button_title": "Laborbericht importieren (PDF/Scan)",
+    "modal_title": "Laborbericht importieren",
+    "upload_button": "PDF oder Bild hochladen",
+    "scan_button": "Mit Kamera scannen",
+    "capture_button": "Foto aufnehmen",
+    "apply_button": "Auf Ausgangswerte anwenden",
+    "loading": "KI analysiert Ihren Bericht...",
+    "confirm_title": "Extrahierte Werte bestätigen",
+    "confirm_subtitle": "Bitte überprüfen Sie die von der KI extrahierten Daten. Sie können die Werte vor der Übernahme bearbeiten. Nicht erkannte Marker werden ignoriert.",
+    "table_marker": "Marker",
+    "table_value": "Wert",
+    "table_unit": "Einheit",
+    "unmapped": "unbekannt",
+    "error_file_size": "Datei ist zu groß. Bitte wählen Sie eine Datei kleiner als 4MB.",
+    "error_file_read": "Die ausgewählte Datei konnte nicht gelesen werden.",
+    "error_no_markers": "Die KI konnte keine erkennbaren Marker im Dokument finden.",
+    "error_generic": "Ein unbekannter Fehler ist während des Imports aufgetreten.",
+    "error_camera": "Konnte nicht auf die Kamera zugreifen. Bitte Berechtigungen prüfen.",
+    "success_applied": "Importierte Laborergebnisse wurden auf Ihre Ausgangswerte angewendet."
+  },
+  "lab_history": {
+    "title": "Verlauf der Laborberichte",
+    "no_reports": "Noch keine Laborberichte importiert.",
+    "report_loaded": "Laborbericht vom {{date}} geladen."
+  }
+}
