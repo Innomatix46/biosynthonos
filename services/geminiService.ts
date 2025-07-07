@@ -8,8 +8,8 @@ import { TFunction } from "i18next";
  */
 
 // Initialize the Google GenAI client
-// The API key is sourced from the environment variable `process.env.API_KEY`.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// The API key is sourced from Vite's environment variables.
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 /**
  * Constructs a detailed prompt for Gemini based on the simulation result.
