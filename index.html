@@ -7,25 +7,18 @@
     <!-- Critical security enhancement: Content Security Policy (CSP) -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://generativelanguage.googleapis.com; img-src 'self' data: blob:; font-src 'self';">
     <title>BioSynthonos: Virtual Athlete Simulator</title>
-  <script type="importmap">
+<script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "lucide-react": "https://esm.sh/lucide-react@0.400.0",
-    "i18next": "https://esm.sh/i18next@23.11.5",
-    "react-i18next": "https://esm.sh/react-i18next@14.1.2",
-    "recharts": "https://esm.sh/recharts@2.12.7",
-    "@google/genai": "https://esm.sh/@google/genai@1.8.0",
-    "i18next-browser-languagedetector": "https://esm.sh/i18next-browser-languagedetector@8.0.0",
-    "nanoid": "https://esm.sh/nanoid@5.0.7",
-    "html-to-image": "https://esm.sh/html-to-image@1.11.11",
-    "jspdf": "https://esm.sh/jspdf@2.5.1",
-    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
-    "react/": "https://esm.sh/react@^19.1.0/",
-    "vite": "https://esm.sh/vite@^7.0.2",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^4.6.0",
-    "@jest/globals": "https://esm.sh/@jest/globals@^30.0.4"
+    "react": "https://esm.sh/react@18.2.0",  // <-- KORREKT
+    "react-dom": "https://esm.sh/react-dom@18.2.0", // <-- KORREKT
+    ...
+    // Ab hier beginnen die automatisch und FALSCH hinzugefügten Einträge:
+    "react/": "https://esm.sh/react@^19.1.0/",              // <-- KONFLIKT & FALSCHE VERSION
+    "vite": "https://esm.sh/vite@^7.0.2",                   // <-- devDependency, gehört nicht hierher!
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^4.6.0", // <-- devDependency!
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",      // <-- KONFLIKT & FALSCHE VERSION
+    "@jest/globals": "https://esm.sh/@jest/globals@^30.0.4" // <-- devDependency!
   }
 }
 </script>
