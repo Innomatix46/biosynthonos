@@ -6,12 +6,17 @@ import { nanoid } from 'nanoid';
 /**
  * @file This service handles communication with the Google Gemini API
  * to provide advanced AI-driven analysis of simulation results and protocol suggestions.
- * It now uses process.env.API_KEY as per the execution environment requirements.
  */
 
-// Per coding guidelines, the API key is assumed to be available on process.env.API_KEY.
-// The execution environment is responsible for providing this variable.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// The API key is loaded from Vite's environment variables.
+// It must be set in a `.env.local` file for local development (VITE_GEMINI_API_KEY=...),
+// or as a secure environment variable in the deployment platform (e.g., Netlify).
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+// The Gemini client is initialized here. Providing an empty string if the key
+// is missing prevents an immediate crash. The API call will then fail gracefully
+// with an "invalid key" error, which is handled in the functions below.
+const ai = new GoogleGenAI({ apiKey: apiKey || "" });
 
 
 const constructAnalysisPrompt = (result: SimulationResult, t: TFunction): string => {
