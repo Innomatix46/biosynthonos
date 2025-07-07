@@ -1,8 +1,8 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import en from './locales/en/translation.json';
-import de from './locales/de/translation.json';
+import en from './src/locales/en/translation.json';
+import de from './src/locales/de/translation.json';
 
 i18next
   .use(initReactI18next)
@@ -22,7 +22,7 @@ i18next
       escapeValue: false, // React already does escaping
       format: (value, format, lng, options) => {
         // Allow nested translations for summary generation
-        if (format === 'nested') {
+        if (format === 'nested' && value && value.key) {
           return i18next.t(value.key, { ...value.values, ...options, ns: 'translation' });
         }
         return value;
