@@ -1,7 +1,8 @@
 
 {
   "common": {
-    "none": "Keine"
+    "none": "Keine",
+    "close": "Schließen"
   },
   "header": {
     "title": "BioSynthonos",
@@ -28,8 +29,8 @@
       "bfp": "Körperfett (%)",
       "experience": "Erfahrungslevel",
       "goal": "Hauptziel",
-      "bloodwork_title": "Ausgangs-Blutbild (Optional)",
-      "bloodwork_subtitle": "Oder geben Sie Ihr Blutbild vor dem Zyklus ein, um die Simulation für höhere Genauigkeit zu kalibrieren.",
+      "bloodwork_title": "Ausgangs-Blutbild",
+      "bloodwork_subtitle": "Oder geben Sie Ihr Blutbild manuell ein, um die Simulation zu kalibrieren.",
       "genetics": "Genetische Faktoren",
       "history": "Krankengeschichte / Notizen",
       "history_placeholder": "z.B. Familiengeschichte von Herzerkrankungen, vorbestehender Bluthochdruck..."
@@ -151,24 +152,28 @@
     }
   },
   "bloodMarkers": {
+    "systolicBP": "Systolischer BD",
+    "diastolicBP": "Diastolischer BD",
+    "glucose": "Glukose",
+    "totalTestosterone": "Gesamt-Test.",
+    "totalTestosterone_short": "Test (ng/dL)",
+    "hdl": "HDL-C",
+    "hdl_short": "HDL (mg/dL)",
+    "ldl": "LDL-C",
+    "alt": "ALT",
+    "alt_short": "ALT (U/L)",
+    "ast": "AST",
+    "egfr": "eGFR",
+    "egfr_short": "eGFR",
     "SystolicBP": "Systolischer BD",
     "DiastolicBP": "Diastolischer BD",
     "Glucose": "Glukose",
-    "TotalTestosterone": "Gesamt-Test.",
-    "totalTestosterone_short": "Test (ng/dL)",
-    "hdl": "HDL-C",
+    "TotalTestosterone": "Gesamt-Testosteron",
     "HDL-C": "HDL-C",
-    "hdl_short": "HDL (mg/dL)",
-    "ldl": "LDL-C",
     "LDL-C": "LDL-C",
-    "alt": "ALT",
     "ALT": "ALT",
-    "alt_short": "ALT (U/L)",
-    "ast": "AST",
     "AST": "AST",
-    "egfr": "eGFR",
     "eGFR": "eGFR",
-    "egfr_short": "eGFR",
     "Estradiol(E2)": "Östradiol (E2)",
     "LH/FSH": "LH / FSH",
     "Hematocrit": "Hämatokrit"
@@ -220,8 +225,8 @@
     "ai_invalid_suggestion": "Die KI hat einen ungültigen oder leeren Vorschlag zurückgegeben. Bitte versuchen Sie es erneut.",
     "unknown_suggestion": "Ein unbekannter Fehler ist beim Abrufen des Vorschlags aufgetreten.",
     "suggestion_failed_prefix": "Vorschlag fehlgeschlagen:",
-    "ai_api_key_invalid": "### KI-Analyse fehlgeschlagen\n\n**Fehler:** Der bereitgestellte API-Schlüssel ist ungültig oder fehlt. Bitte stellen Sie sicher, dass er korrekt in den Umgebungsvariablen der Anwendung konfiguriert ist.",
-    "ai_analysis_failed": "### KI-Analyse fehlgeschlagen\n\n**Fehler:** Die Analyse konnte nicht vom KI-Modell abgerufen werden. Der Dienst ist möglicherweise nicht verfügbar, die Anfrage wurde möglicherweise blockiert oder es gab ein Konfigurationsproblem. Überprüfen Sie die Browser-Konsole für weitere Details.",
+    "ai_api_key_invalid": "KI-Funktion fehlgeschlagen: Der API-Schlüssel ist ungültig, fehlt oder wurde blockiert. Bitte überprüfen Sie Ihre Umgebungskonfiguration.",
+    "ai_analysis_failed": "KI-Analyse fehlgeschlagen: Die Analyse konnte nicht vom KI-Modell abgerufen werden. Der Dienst ist möglicherweise nicht verfügbar oder es gab ein Konfigurationsproblem.",
     "ai_api_key_invalid_suggestion": "Der KI-API-Schlüssel ist ungültig. Bitte überprüfen Sie Ihre Konfiguration.",
     "ai_suggestion_failed": "Der Vorschlag konnte nicht vom KI-Modell abgerufen werden. Der Dienst ist möglicherweise nicht verfügbar oder blockiert."
   },
@@ -254,7 +259,7 @@
     "export_success": "PDF-Bericht erfolgreich exportiert!",
     "export_error": "Fehler beim Exportieren des PDF-Berichts."
   },
-    "lab_import": {
+  "lab_import": {
     "button_title": "Laborbericht importieren (PDF/Scan)",
     "modal_title": "Laborbericht importieren",
     "upload_button": "PDF oder Bild hochladen",
