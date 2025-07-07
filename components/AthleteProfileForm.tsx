@@ -1,3 +1,4 @@
+
 /**
  * @file A form component for inputting the athlete's profile data,
  * including biometrics, goals, and health factors. Now includes experience level and baseline blood work.
@@ -5,33 +6,29 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AthleteProfile } from '../shared/types';
-import { User, Target, Dna, FileText, Activity, Beaker, ChevronDown, ChevronUp } from 'lucide-react';
+import { User, Target, Dna, FileText, Activity, Beaker, UploadCloud } from 'lucide-react';
 import { GOAL_OPTIONS, GENETIC_FACTOR_OPTIONS, EXPERIENCE_LEVEL_OPTIONS } from '../constants';
+import { CollapsibleSection } from './ui/CollapsibleSection';
+import { UnitSwitcher, Unit } from './ui/UnitSwitcher';
+
+// Conversion Factors for internal storage (always ng/dL and mg/dL)
+const TESTOSTERONE_CONVERSION = 28.84; // ng/dL to nmol/L
+const GLUCOSE_CONVERSION = 18.018; // mg/dL to mmol/L
 
 interface AthleteProfileFormProps {
   profile: AthleteProfile;
   onChange: (profile: AthleteProfile) => void;
+  onOpenLabImporter: () => void;
 }
 
-const CollapsibleSection: React.FC<{ title: string; icon: React.ReactNode; children: React.ReactNode; defaultOpen?: boolean }> = ({ title, icon, children, defaultOpen = false }) => {
-    const [isOpen, setIsOpen] = React.useState(defaultOpen);
-    return (
-        <div className="bg-gray-900/50 rounded-lg border border-gray-700 overflow-hidden">
-            <button onClick={() => setIsOpen(!isOpen)} className="w-full flex justify-between items-center p-3 text-left hover:bg-gray-700/50 transition-colors">
-                <h3 className="text-md font-semibold flex items-center gap-2">{icon} {title}</h3>
-                {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-            </button>
-            {isOpen && <div className="p-3 pt-2 border-t border-gray-700">{children}</div>}
-        </div>
-    );
-};
-
-export const AthleteProfileForm: React.FC<AthleteProfileFormProps> = ({ profile, onChange }) => {
+export const AthleteProfileForm: React.FC<AthleteProfileFormProps> = ({ profile, onChange, onOpenLabImporter }) => {
   const { t } = useTranslation();
-  /**
-   * Handles changes for standard input, select, and textarea elements.
-   * It correctly casts numeric values.
-   */
+  
+  const [units, setUnits] = React.useState({
+      totalTestosterone: 'ng/dL' as Unit,
+      glucose: 'mg/dL' as Unit,
+  });
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     const isNumeric = ['age', 'weight', 'bfp'].includes(name);
@@ -48,11 +45,55 @@ export const AthleteProfileForm: React.FC<AthleteProfileFormProps> = ({ profile,
         }
     })
   }
+  
+  const handleUnitChange = (marker: keyof typeof units, newUnit: Unit) => {
+    setUnits(prev => ({...prev, [marker]: newUnit}));
+  };
+  
+  const getDisplayValue = (marker: keyof typeof units) => {
+      const baseValue = profile.baselineBloodWork?.[marker as keyof typeof profile.baselineBloodWork] ?? '';
+      if (baseValue === '' || baseValue === undefined) return '';
 
-  /**
-   * Handles changes for the genetic factor checkboxes,
-   * adding or removing factors from the array.
-   */
+      const currentUnit = units[marker];
+      if (marker === 'totalTestosterone' && currentUnit === 'nmol/L') {
+          return (Number(baseValue) / TESTOSTERONE_CONVERSION).toFixed(1);
+      }
+      if (marker === 'glucose' && currentUnit === 'mmol/L') {
+          return (Number(baseValue) / GLUCOSE_CONVERSION).toFixed(1);
+      }
+      return String(baseValue);
+  }
+
+  const handleDisplayValueChange = (e: React.ChangeEvent<HTMLInputElement>, marker: keyof typeof units) => {
+    const displayValue = e.target.value;
+    let baseValue: number | undefined;
+
+    if (displayValue === '') {
+        baseValue = undefined;
+    } else {
+        const numericValue = parseFloat(displayValue.replace(',', '.'));
+        if (isNaN(numericValue)) return; // Don't update if input is not a number
+
+        const currentUnit = units[marker];
+        if (marker === 'totalTestosterone' && currentUnit === 'nmol/L') {
+            baseValue = numericValue * TESTOSTERONE_CONVERSION;
+        } else if (marker === 'glucose' && currentUnit === 'mmol/L') {
+            baseValue = numericValue * GLUCOSE_CONVERSION;
+        } else {
+            baseValue = numericValue;
+        }
+    }
+    
+    onChange({
+        ...profile,
+        baselineBloodWork: {
+            ...profile.baselineBloodWork,
+            [marker as keyof typeof profile.baselineBloodWork]: baseValue
+        }
+    })
+  }
+
+
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
     const currentFactors = profile.geneticFactors;
@@ -66,7 +107,6 @@ export const AthleteProfileForm: React.FC<AthleteProfileFormProps> = ({ profile,
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold text-brand-blue flex items-center gap-2"><User size={20}/> {t('forms.profile.title')}</h2>
-      {/* Biometric inputs */}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-400 mb-1">{t('forms.profile.age')}</label>
@@ -101,44 +141,58 @@ export const AthleteProfileForm: React.FC<AthleteProfileFormProps> = ({ profile,
           </select>
         </div>
         
-        <CollapsibleSection title={t('forms.profile.bloodwork_title')} icon={<Beaker size={16} />}>
-            <p className="text-xs text-gray-500 mb-3">{t('forms.profile.bloodwork_subtitle')}</p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                <div className="text-sm">
-                    <label className="block font-medium text-gray-400">{t('bloodMarkers.systolicBP')}</label>
-                    <input type="number" name="systolicBP" value={profile.baselineBloodWork?.systolicBP ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
-                </div>
-                 <div className="text-sm">
-                    <label className="block font-medium text-gray-400">{t('bloodMarkers.diastolicBP')}</label>
-                    <input type="number" name="diastolicBP" value={profile.baselineBloodWork?.diastolicBP ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
-                </div>
-                <div className="text-sm">
-                    <label className="block font-medium text-gray-400">{t('bloodMarkers.glucose')}</label>
-                    <input type="number" name="glucose" value={profile.baselineBloodWork?.glucose ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
-                </div>
-                <div className="text-sm">
-                    <label className="block font-medium text-gray-400">{t('bloodMarkers.totalTestosterone')}</label>
-                    <input type="number" name="totalTestosterone" value={profile.baselineBloodWork?.totalTestosterone ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
-                </div>
-                 <div className="text-sm">
-                    <label className="block font-medium text-gray-400">{t('bloodMarkers.hdl')}</label>
-                    <input type="number" name="hdl" value={profile.baselineBloodWork?.hdl ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
-                </div>
-                <div className="text-sm">
-                    <label className="block font-medium text-gray-400">{t('bloodMarkers.ldl')}</label>
-                    <input type="number" name="ldl" value={profile.baselineBloodWork?.ldl ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
-                </div>
-                <div className="text-sm">
-                    <label className="block font-medium text-gray-400">{t('bloodMarkers.alt')}</label>
-                    <input type="number" name="alt" value={profile.baselineBloodWork?.alt ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
-                </div>
-                <div className="text-sm">
-                    <label className="block font-medium text-gray-400">{t('bloodMarkers.ast')}</label>
-                    <input type="number" name="ast" value={profile.baselineBloodWork?.ast ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
-                </div>
-                 <div className="text-sm">
-                    <label className="block font-medium text-gray-400">{t('bloodMarkers.egfr')}</label>
-                    <input type="number" name="egfr" value={profile.baselineBloodWork?.egfr ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
+        <CollapsibleSection title={t('forms.profile.bloodwork_title')} icon={<Beaker size={20} />}>
+            <div className="space-y-4 pt-2">
+                <button onClick={onOpenLabImporter} className="w-full flex items-center justify-center gap-2 text-sm bg-gray-700 hover:bg-gray-600 text-gray-300 font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
+                    <UploadCloud size={16}/>
+                    {t('lab_import.button_title')}
+                </button>
+                <p className="text-xs text-gray-500 text-center">{t('forms.profile.bloodwork_subtitle')}</p>
+                
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="text-sm col-span-2">
+                        <label className="block font-medium text-gray-400">{t('bloodMarkers.totalTestosterone')}</label>
+                        <div className="flex items-center gap-1">
+                            <input type="text" value={getDisplayValue('totalTestosterone')} onChange={(e) => handleDisplayValueChange(e, 'totalTestosterone')} className="flex-grow w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
+                            <UnitSwitcher currentUnit={units.totalTestosterone} options={['ng/dL', 'nmol/L']} onChange={(newUnit) => handleUnitChange('totalTestosterone', newUnit)} />
+                        </div>
+                    </div>
+                    <div className="text-sm col-span-2">
+                        <label className="block font-medium text-gray-400">{t('bloodMarkers.glucose')}</label>
+                         <div className="flex items-center gap-1">
+                            <input type="text" value={getDisplayValue('glucose')} onChange={(e) => handleDisplayValueChange(e, 'glucose')} className="flex-grow w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
+                            <UnitSwitcher currentUnit={units.glucose} options={['mg/dL', 'mmol/L']} onChange={(newUnit) => handleUnitChange('glucose', newUnit)} />
+                        </div>
+                    </div>
+                    
+                    <div className="text-sm">
+                        <label className="block font-medium text-gray-400">{t('bloodMarkers.systolicBP')}</label>
+                        <input type="number" name="systolicBP" value={profile.baselineBloodWork?.systolicBP ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
+                    </div>
+                    <div className="text-sm">
+                        <label className="block font-medium text-gray-400">{t('bloodMarkers.diastolicBP')}</label>
+                        <input type="number" name="diastolicBP" value={profile.baselineBloodWork?.diastolicBP ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
+                    </div>
+                    <div className="text-sm">
+                        <label className="block font-medium text-gray-400">{t('bloodMarkers.hdl')}</label>
+                        <input type="number" name="hdl" value={profile.baselineBloodWork?.hdl ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
+                    </div>
+                    <div className="text-sm">
+                        <label className="block font-medium text-gray-400">{t('bloodMarkers.ldl')}</label>
+                        <input type="number" name="ldl" value={profile.baselineBloodWork?.ldl ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
+                    </div>
+                    <div className="text-sm">
+                        <label className="block font-medium text-gray-400">{t('bloodMarkers.alt')}</label>
+                        <input type="number" name="alt" value={profile.baselineBloodWork?.alt ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
+                    </div>
+                    <div className="text-sm">
+                        <label className="block font-medium text-gray-400">{t('bloodMarkers.ast')}</label>
+                        <input type="number" name="ast" value={profile.baselineBloodWork?.ast ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
+                    </div>
+                    <div className="text-sm col-span-2">
+                        <label className="block font-medium text-gray-400">{t('bloodMarkers.egfr')}</label>
+                        <input type="number" name="egfr" value={profile.baselineBloodWork?.egfr ?? ''} onChange={handleBloodworkChange} className="w-full bg-gray-800 border-gray-600 rounded p-1.5 focus:ring-1 focus:ring-brand-blue"/>
+                    </div>
                 </div>
             </div>
         </CollapsibleSection>

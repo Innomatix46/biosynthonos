@@ -1,15 +1,17 @@
+
 /**
  * @file A container component that groups all user input forms,
  * the main action buttons, and a Profile Management section.
  */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { AppState } from '../shared/types';
+import { AppState, LabReport } from '../shared/types';
 import { AthleteProfileForm } from './AthleteProfileForm';
 import { NutritionForm } from './NutritionForm';
 import { ProtocolDesignerForm } from './ProtocolDesignerForm';
 import { SupportForm } from './SupportForm';
 import { PctForm } from './PctForm';
+import { LabReportHistory } from './LabReportHistory';
 import { PlayCircle, XCircle, Save, Trash2, FolderOpen, Wand2 } from 'lucide-react';
 
 interface InputPanelProps {
@@ -26,6 +28,9 @@ interface InputPanelProps {
   onSaveProfile: () => void;
   onLoadProfile: (name: string) => void;
   onDeleteProfile: () => void;
+  // --- Lab Report Props ---
+  onOpenLabImporter: () => void;
+  onLoadLabReport: (report: LabReport) => void;
 }
 
 // A local component for managing profiles, only used within InputPanel.
@@ -81,7 +86,7 @@ const ProfileManager: React.FC<Pick<InputPanelProps, 'savedProfiles' | 'activePr
 
 export const InputPanel: React.FC<InputPanelProps> = ({ 
     appState, onInputChange, onSimulate, onClear, onSuggestProtocol, isSuggesting, hasResults,
-    savedProfiles, activeProfileName, onSaveProfile, onLoadProfile, onDeleteProfile 
+    savedProfiles, activeProfileName, onSaveProfile, onLoadProfile, onDeleteProfile, onOpenLabImporter, onLoadLabReport
 }) => {
   const { t } = useTranslation();
   return (
@@ -132,10 +137,17 @@ export const InputPanel: React.FC<InputPanelProps> = ({
         onDeleteProfile={onDeleteProfile}
       />
       <div className="border-t border-gray-700"></div>
+      
+      <LabReportHistory
+        reports={appState.labReports || []}
+        onLoadReport={onLoadLabReport}
+       />
+      <div className="border-t border-gray-700"></div>
 
       <AthleteProfileForm
         profile={appState.profile}
         onChange={(data) => onInputChange('profile', data)}
+        onOpenLabImporter={onOpenLabImporter}
       />
       <div className="border-t border-gray-700"></div>
       

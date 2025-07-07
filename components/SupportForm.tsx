@@ -1,9 +1,11 @@
+
 /**
  * @file A form component for managing the on-cycle support protocol,
  * including Aromatase Inhibitors, BP meds, etc.
  */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { nanoid } from 'nanoid';
 import { PedProtocol } from '../shared/types';
 import { PED_COMPOUNDS } from '../constants';
 import { Shield, PlusCircle, Trash2 } from 'lucide-react';
@@ -20,7 +22,7 @@ export const SupportForm: React.FC<SupportFormProps> = ({ support, onChange }) =
   const { t } = useTranslation();
   const handleAddCompound = () => {
     const newCompound: PedProtocol = {
-      id: `support-${Date.now()}`,
+      id: nanoid(),
       compound: 'None',
       dosage: 0,
       frequency: 'daily',
@@ -62,7 +64,7 @@ export const SupportForm: React.FC<SupportFormProps> = ({ support, onChange }) =
             </select>
             <div className={`grid grid-cols-2 gap-4 transition-opacity ${p.compound === 'None' ? 'opacity-50' : 'opacity-100'}`}>
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-1">{t('forms.common.dosage')}</label>
+                <label className="block text-sm font-medium text-gray-400 mb-1">{t('forms.common.dosage_mg')}</label>
                 <input
                   type="number"
                   name="dosage"

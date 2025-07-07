@@ -1,25 +1,32 @@
+
 /**
  * @file A new form component for designing complex, multi-phase pharmacological protocols.
  * Allows users to add/remove phases and compounds within each phase.
  */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ProtocolPhase, PedProtocol } from '../shared/types';
+import { nanoid } from 'nanoid';
+import { ProtocolPhase, PedProtocol, PedCompound } from '../shared/types';
 import { PED_COMPOUNDS } from '../constants';
 import { Beaker, PlusCircle, Trash2, Layers, Clock } from 'lucide-react';
 
-// Group compounds by category for the dropdown
-const groupedCompounds = PED_COMPOUNDS.reduce((acc, compound) => {
-  const category = compound.category;
+// Group compounds by category for the dropdown. This implementation is more type-safe.
+const groupedCompounds = PED_COMPOUNDS.reduce<Record<string, PedCompound[]>>((acc, compound) => {
+  const { category } = compound;
+  
+  // Exclude support and PCT compounds from this form as they are handled in separate sections.
+  // The 'None' compound is in the 'Other' category and will be included correctly.
+  if (category === 'Support' || category === 'SERM') {
+    return acc;
+  }
+
   if (!acc[category]) {
     acc[category] = [];
   }
-  // Exclude support and PCT compounds from this form
-  if (category !== 'Support' && category !== 'SERM') {
-      acc[category].push(compound);
-  }
+  
+  acc[category].push(compound);
   return acc;
-}, {} as Record<string, typeof PED_COMPOUNDS>);
+}, {});
 
 
 interface ProtocolDesignerFormProps {
@@ -40,11 +47,11 @@ export const ProtocolDesignerForm: React.FC<ProtocolDesignerFormProps> = ({ prot
 
   const handleAddPhase = () => {
     const newPhase: ProtocolPhase = {
-      id: `phase-${Date.now()}`,
+      id: nanoid(),
       name: t('forms.designer.new_phase_name'),
       durationWeeks: 8,
       compounds: [{
-        id: `ped-${Date.now()}`,
+        id: nanoid(),
         compound: 'None',
         dosage: 0,
         frequency: 'weekly',
@@ -75,7 +82,7 @@ export const ProtocolDesignerForm: React.FC<ProtocolDesignerFormProps> = ({ prot
 
   const handleAddCompound = (phaseId: string) => {
     const newCompound: PedProtocol = {
-      id: `ped-${Date.now()}`,
+      id: nanoid(),
       compound: 'None',
       dosage: 0,
       frequency: 'weekly',
@@ -140,56 +147,61 @@ export const ProtocolDesignerForm: React.FC<ProtocolDesignerFormProps> = ({ prot
             </div>
 
             <div className="space-y-3">
-              {phase.compounds.map((p, index) => (
-                <div key={p.id} className="p-3 bg-gray-700/50 rounded-lg border border-gray-600 space-y-3">
-                  <div className="flex justify-between items-center">
-                    <label className="text-sm font-medium text-gray-400">{t('forms.common.compound_num', { num: index + 1 })}</label>
-                    {phase.compounds.length > 1 && (
-                      <button onClick={() => handleRemoveCompound(phase.id, p.id)} className="text-red-400 hover:text-red-300">
-                        <Trash2 size={16} />
-                      </button>
-                    )}
-                  </div>
-                  <select
-                    value={p.compound}
-                    onChange={(e) => handleCompoundChange(phase.id, p.id, 'compound', e.target.value)}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-brand-yellow focus:outline-none"
-                  >
-                     {Object.entries(groupedCompounds).map(([category, compounds]) => (
-                        <optgroup key={category} label={category}>
-                        {compounds.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
-                        </optgroup>
-                    ))}
-                  </select>
-                  <div className={`grid grid-cols-2 gap-4 transition-opacity ${p.compound === 'None' ? 'opacity-50' : 'opacity-100'}`}>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-1">{t('forms.common.dosage')}</label>
-                      <input
-                        type="number"
-                        value={p.dosage}
-                        onChange={(e) => handleCompoundChange(phase.id, p.id, 'dosage', Number(e.target.value))}
-                        className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-brand-yellow focus:outline-none"
-                        disabled={p.compound === 'None'}
-                      />
+              {phase.compounds.map((p, index) => {
+                const isGH = p.compound.includes('(GH)');
+                const dosageLabel = isGH ? t('forms.common.dosage_iu') : t('forms.common.dosage_mg');
+
+                return (
+                  <div key={p.id} className="p-3 bg-gray-700/50 rounded-lg border border-gray-600 space-y-3">
+                    <div className="flex justify-between items-center">
+                      <label className="text-sm font-medium text-gray-400">{t('forms.common.compound_num', { num: index + 1 })}</label>
+                      {phase.compounds.length > 1 && (
+                        <button onClick={() => handleRemoveCompound(phase.id, p.id)} className="text-red-400 hover:text-red-300">
+                          <Trash2 size={16} />
+                        </button>
+                      )}
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-1">{t('forms.common.frequency')}</label>
-                      <select
-                        value={p.frequency}
-                        onChange={(e) => handleCompoundChange(phase.id, p.id, 'frequency', e.target.value)}
-                        className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-brand-yellow focus:outline-none"
-                        disabled={p.compound === 'None'}
-                      >
-                        <option value="daily">{t('frequency.daily')}</option>
-                        <option value="eod">{t('frequency.eod')}</option>
-                        <option value="e3d">{t('frequency.e3d')}</option>
-                        <option value="weekly">{t('frequency.weekly')}</option>
-                        <option value="bi-weekly">{t('frequency.bi_weekly')}</option>
-                      </select>
+                    <select
+                      value={p.compound}
+                      onChange={(e) => handleCompoundChange(phase.id, p.id, 'compound', e.target.value)}
+                      className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-brand-yellow focus:outline-none"
+                    >
+                      {Object.keys(groupedCompounds).map((category) => (
+                          <optgroup key={category} label={category}>
+                          {groupedCompounds[category].map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
+                          </optgroup>
+                      ))}
+                    </select>
+                    <div className={`grid grid-cols-2 gap-4 transition-opacity ${p.compound === 'None' ? 'opacity-50' : 'opacity-100'}`}>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-400 mb-1">{dosageLabel}</label>
+                        <input
+                          type="number"
+                          value={p.dosage}
+                          onChange={(e) => handleCompoundChange(phase.id, p.id, 'dosage', Number(e.target.value))}
+                          className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-brand-yellow focus:outline-none"
+                          disabled={p.compound === 'None'}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-400 mb-1">{t('forms.common.frequency')}</label>
+                        <select
+                          value={p.frequency}
+                          onChange={(e) => handleCompoundChange(phase.id, p.id, 'frequency', e.target.value)}
+                          className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-brand-yellow focus:outline-none"
+                          disabled={p.compound === 'None' || isGH} // GH is daily, so frequency is fixed.
+                        >
+                          <option value="daily">{t('frequency.daily')}</option>
+                          <option value="eod">{t('frequency.eod')}</option>
+                          <option value="e3d">{t('frequency.e3d')}</option>
+                          <option value="weekly">{t('frequency.weekly')}</option>
+                          <option value="bi-weekly">{t('frequency.bi_weekly')}</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
               <button
                 onClick={() => handleAddCompound(phase.id)}
                 className="w-full flex items-center justify-center gap-2 text-xs bg-gray-800 hover:bg-gray-600 text-gray-300 font-semibold py-2 px-3 rounded-lg transition-colors duration-200 disabled:opacity-50"

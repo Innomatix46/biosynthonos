@@ -4,6 +4,7 @@
  */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { nanoid } from 'nanoid';
 import { PedProtocol } from '../shared/types';
 import { PED_COMPOUNDS } from '../constants';
 import { Recycle, PlusCircle, Trash2 } from 'lucide-react';
@@ -23,7 +24,7 @@ export const PctForm: React.FC<PctFormProps> = ({ pct, onChange }) => {
    */
   const handleAddCompound = () => {
     const newCompound: PedProtocol = {
-      id: `pct-${Date.now()}`,
+      id: nanoid(),
       compound: 'None',
       dosage: 0,
       frequency: 'daily',
