@@ -1,7 +1,8 @@
 
 {
   "common": {
-    "none": "None"
+    "none": "None",
+    "close": "Close"
   },
   "header": {
     "title": "BioSynthonos",
@@ -28,8 +29,8 @@
       "bfp": "Body Fat (%)",
       "experience": "Experience Level",
       "goal": "Primary Goal",
-      "bloodwork_title": "Baseline Blood Work (Optional)",
-      "bloodwork_subtitle": "Or enter your pre-cycle blood work to calibrate the simulation for higher accuracy.",
+      "bloodwork_title": "Baseline Blood Work",
+      "bloodwork_subtitle": "Or manually enter your pre-cycle blood work to calibrate the simulation.",
       "genetics": "Genetic Factors",
       "history": "Medical History / Notes",
       "history_placeholder": "e.g., family history of heart disease, pre-existing high blood pressure..."
@@ -151,24 +152,28 @@
     }
   },
   "bloodMarkers": {
+    "systolicBP": "Systolic BP",
+    "diastolicBP": "Diastolic BP",
+    "glucose": "Glucose",
+    "totalTestosterone": "Total Test",
+    "totalTestosterone_short": "Test (ng/dL)",
+    "hdl": "HDL-C",
+    "hdl_short": "HDL (mg/dL)",
+    "ldl": "LDL-C",
+    "alt": "ALT",
+    "alt_short": "ALT (U/L)",
+    "ast": "AST",
+    "egfr": "eGFR",
+    "egfr_short": "eGFR",
     "SystolicBP": "Systolic BP",
     "DiastolicBP": "Diastolic BP",
     "Glucose": "Glucose",
-    "TotalTestosterone": "Total Test",
-    "totalTestosterone_short": "Test (ng/dL)",
-    "hdl": "HDL-C",
+    "TotalTestosterone": "Total Testosterone",
     "HDL-C": "HDL-C",
-    "hdl_short": "HDL (mg/dL)",
-    "ldl": "LDL-C",
     "LDL-C": "LDL-C",
-    "alt": "ALT",
     "ALT": "ALT",
-    "alt_short": "ALT (U/L)",
-    "ast": "AST",
     "AST": "AST",
-    "egfr": "eGFR",
     "eGFR": "eGFR",
-    "egfr_short": "eGFR",
     "Estradiol(E2)": "Estradiol (E2)",
     "LH/FSH": "LH / FSH",
     "Hematocrit": "Hematocrit"
@@ -220,8 +225,8 @@
     "ai_invalid_suggestion": "The AI returned an invalid or empty suggestion. Please try again.",
     "unknown_suggestion": "An unknown error occurred while fetching the suggestion.",
     "suggestion_failed_prefix": "Suggestion Failed:",
-    "ai_api_key_invalid": "### AI Analysis Failed\n\n**Error:** The provided API Key is invalid or missing. Please ensure it is correctly configured in the application's environment variables.",
-    "ai_analysis_failed": "### AI Analysis Failed\n\n**Error:** Could not retrieve analysis from the AI model. The service may be unavailable, the request may have been blocked, or there was a configuration issue. Check the browser console for more details.",
+    "ai_api_key_invalid": "AI feature failed: The API Key is invalid, missing, or has been blocked. Please check your environment configuration.",
+    "ai_analysis_failed": "AI analysis failed: Could not retrieve analysis from the AI model. The service may be unavailable or there was a configuration issue.",
     "ai_api_key_invalid_suggestion": "The AI API Key is invalid. Please check your configuration.",
     "ai_suggestion_failed": "Could not retrieve suggestion from the AI model. The service may be unavailable or blocked."
   },
