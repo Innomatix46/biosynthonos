@@ -15,21 +15,22 @@ export const ProtocolSnapshot: React.FC<ProtocolSnapshotProps> = ({ result }) =>
   const { t } = useTranslation();
   const { profile, protocolPhases, support, pct } = result;
   
-  // Helper to summarize compounds in a protocol array
-  const summarizeProtocol = (protocol: PedProtocol[]) => 
-    protocol
-      .filter(p => p.compound !== 'None')
+  // Helper to summarize compounds in a protocol array, now with guards for malformed data
+  const summarizeProtocol = (protocol?: PedProtocol[]) => 
+    (protocol || [])
+      .filter(p => p && p.compound && p.compound !== 'None')
       .map(p => `${p.compound.split(' ')[0]} ${p.dosage}mg`)
       .join(' + ') || t('common.none');
   
   const supportSummary = summarizeProtocol(support);
-  const pctSummary = pct
-    .filter(p => p.compound !== 'None')
+  
+  const pctSummary = (pct || [])
+    .filter(p => p && p.compound && p.compound !== 'None')
     .map(p => `${p.compound.split(' ')[0]} ${p.dosage}mg/day for ${p.durationWeeks}w`)
     .join(' + ');
 
-  const cycleDuration = protocolPhases.reduce((sum, phase) => sum + (phase.durationWeeks || 0), 0);
-  const pctDuration = pct.reduce((max, p) => Math.max(max, p.durationWeeks || 0), 0);
+  const cycleDuration = (protocolPhases || []).reduce((sum, phase) => sum + (phase?.durationWeeks || 0), 0);
+  const pctDuration = (pct || []).reduce((max, p) => Math.max(max, p?.durationWeeks || 0), 0);
   const totalDuration = cycleDuration + pctDuration;
   
   const experienceTKey = EXPERIENCE_LEVEL_OPTIONS.find(o => o.value === profile.experienceLevel)?.tKey || '';
@@ -40,8 +41,8 @@ export const ProtocolSnapshot: React.FC<ProtocolSnapshotProps> = ({ result }) =>
        <div className="text-xs text-gray-400 space-y-2">
           <p><strong>{t('forms.profile.goal')}:</strong> {t(profile.goal)} ({t(experienceTKey)})</p>
           <div className="space-y-1">
-            {protocolPhases.map((phase, index) => (
-                <p key={phase.id}>
+            {(protocolPhases || []).map((phase, index) => (
+                phase && <p key={phase.id}>
                     <strong>{t('results.phase', { index: index + 1, name: phase.name })}:</strong> {summarizeProtocol(phase.compounds)} ({t('results.weeks', { count: phase.durationWeeks })})
                 </p>
             ))}
