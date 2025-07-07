@@ -18,6 +18,7 @@ export const PED_COMPOUNDS: PedCompound[] = [
   { name: 'Testosterone Enanthate', category: 'AAS', halfLifeDays: 7, anabolic: 8, androgenic: 8, hepatoToxicity: 1, cardioToxicity: 5, hptaSuppression: 9, nephroToxicity: 2 },
   { name: 'Testosterone Cypionate', category: 'AAS', halfLifeDays: 8, anabolic: 8, androgenic: 8, hepatoToxicity: 1, cardioToxicity: 5, hptaSuppression: 9, nephroToxicity: 2 },
   { name: 'Testosterone Propionate', category: 'AAS', halfLifeDays: 2, anabolic: 8, androgenic: 8, hepatoToxicity: 1, cardioToxicity: 5, hptaSuppression: 9, nephroToxicity: 2 },
+  { name: 'Testosterone Suspension', category: 'AAS', halfLifeDays: 0.1, anabolic: 8, androgenic: 8, hepatoToxicity: 2, cardioToxicity: 5, hptaSuppression: 9, nephroToxicity: 2 },
   { name: 'Trenbolone Acetate', category: 'AAS', halfLifeDays: 3, anabolic: 10, androgenic: 10, hepatoToxicity: 3, cardioToxicity: 9, hptaSuppression: 10, nephroToxicity: 8 },
   { name: 'Trenbolone Enanthate', category: 'AAS', halfLifeDays: 7, anabolic: 10, androgenic: 10, hepatoToxicity: 3, cardioToxicity: 9, hptaSuppression: 10, nephroToxicity: 8 },
   { name: 'Nandrolone Decanoate', category: 'AAS', halfLifeDays: 14, anabolic: 9, androgenic: 3, hepatoToxicity: 1, cardioToxicity: 4, hptaSuppression: 10, nephroToxicity: 3 },
@@ -25,6 +26,8 @@ export const PED_COMPOUNDS: PedCompound[] = [
   { name: 'Metandienone (Dianabol)', category: 'AAS', halfLifeDays: 0.25, anabolic: 7, androgenic: 5, hepatoToxicity: 8, cardioToxicity: 6, hptaSuppression: 8, nephroToxicity: 4 },
   { name: 'Drostanolone (Masteron)', category: 'AAS', halfLifeDays: 2.5, anabolic: 6, androgenic: 4, hepatoToxicity: 2, cardioToxicity: 6, hptaSuppression: 4, nephroToxicity: 3 },
   { name: 'Stanozolol (Winstrol)', category: 'AAS', halfLifeDays: 0.4, anabolic: 6, androgenic: 3, hepatoToxicity: 9, cardioToxicity: 9, hptaSuppression: 5, nephroToxicity: 6 },
+  { name: 'Metenolone Enanthate (Primobolan)', category: 'AAS', halfLifeDays: 10, anabolic: 5, androgenic: 1, hepatoToxicity: 1, cardioToxicity: 3, hptaSuppression: 3, nephroToxicity: 1 },
+  { name: 'Boldenone Undecylenate (Equipoise)', category: 'AAS', halfLifeDays: 14, anabolic: 7, androgenic: 3, hepatoToxicity: 1, cardioToxicity: 5, hptaSuppression: 5, nephroToxicity: 3 },
 
   // SARMs
   { name: 'Ostarine (MK-2866)', category: 'SARM', halfLifeDays: 1, anabolic: 4, androgenic: 1, hepatoToxicity: 3, cardioToxicity: 2, hptaSuppression: 4, nephroToxicity: 1 },
@@ -38,7 +41,7 @@ export const PED_COMPOUNDS: PedCompound[] = [
   { name: 'CJC-1295 (with DAC)', category: 'Peptide', halfLifeDays: 8, anabolic: 3, androgenic: 0, hepatoToxicity: 0, cardioToxicity: 2, hptaSuppression: 2, nephroToxicity: 1 },
   
   // Hormones
-  { name: 'Growth Hormone (GH)', category: 'Hormone', halfLifeDays: 0.2, anabolic: 5, androgenic: 0, hepatoToxicity: 1, cardioToxicity: 3, hptaSuppression: 2, nephroToxicity: 2 },
+  { name: 'Growth Hormone (GH) - in IU', category: 'Hormone', halfLifeDays: 0.2, anabolic: 5, androgenic: 0, hepatoToxicity: 1, cardioToxicity: 3, hptaSuppression: 2, nephroToxicity: 2 },
   { name: 'Insulin (Humalog)', category: 'Hormone', halfLifeDays: 0.1, anabolic: 9, androgenic: 0, hepatoToxicity: 1, cardioToxicity: 2, hptaSuppression: 1, nephroToxicity: 1 },
   
   // SERMs (for PCT)
@@ -49,6 +52,8 @@ export const PED_COMPOUNDS: PedCompound[] = [
   { name: 'Anastrozole (Arimidex)', category: 'Support', halfLifeDays: 2, anabolic: 0, androgenic: 0, hepatoToxicity: 1, cardioToxicity: 2, hptaSuppression: 0, estrogenReduction: 0.5, nephroToxicity: 0 },
   { name: 'Exemestane (Aromasin)', category: 'Support', halfLifeDays: 1, anabolic: 0, androgenic: 0, hepatoToxicity: 1, cardioToxicity: 1, hptaSuppression: 0, estrogenReduction: 0.65, nephroToxicity: 0 },
   { name: 'Telmisartan', category: 'Support', halfLifeDays: 1, anabolic: 0, androgenic: 0, hepatoToxicity: 0, cardioToxicity: 0, hptaSuppression: 0, bloodPressureReduction: 10, nephroToxicity: -2 }, // Nephroprotective
+  { name: 'Nebivolol', category: 'Support', halfLifeDays: 0.5, anabolic: 0, androgenic: 0, hepatoToxicity: 0, cardioToxicity: 0, hptaSuppression: 0, bloodPressureReduction: 8, nephroToxicity: 0 },
+  { name: 'Lisinopril', category: 'Support', halfLifeDays: 0.5, anabolic: 0, androgenic: 0, hepatoToxicity: 0, cardioToxicity: 0, hptaSuppression: 0, bloodPressureReduction: 9, nephroToxicity: -1 }, // Slightly nephroprotective
 ];
 
 // Options now use translation keys
