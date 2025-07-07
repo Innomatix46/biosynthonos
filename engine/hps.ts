@@ -57,7 +57,9 @@ export const runHpsWeekSimulation = (pkeResult: PkeResult, isPctPhase: boolean):
   }
 
   // Calculate a metabolic adjustment factor.
-  const metabolicAdjustmentFactor = 1.0 + (totalAnabolic / 100) * 0.5;
+  // This factor slightly increases TDEE based on the anabolic load.
+  // The sensitivity is set to a 5% TDEE increase for a high anabolic score of 100.
+  const metabolicAdjustmentFactor = 1.0 + (totalAnabolic / 100) * 0.05;
 
   return {
     totalAnabolic: Math.round(totalAnabolic),
@@ -66,8 +68,8 @@ export const runHpsWeekSimulation = (pkeResult: PkeResult, isPctPhase: boolean):
     totalCardioToxicity: Math.round(totalCardioToxicity),
     totalHptaSuppression: Math.round(totalHptaSuppression),
     totalNephroToxicity: Math.round(totalNephroToxicity),
-    totalEstrogenReduction: totalEstrogenReduction,
-    totalBloodPressureReduction: totalBloodPressureReduction,
+    totalEstrogenReduction,
+    totalBloodPressureReduction,
     metabolicAdjustmentFactor,
   };
 };

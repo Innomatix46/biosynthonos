@@ -1,3 +1,4 @@
+
 /**
  * @file The new Pharmacokinetic Engine (PKE).
  * This module simulates the active concentration of compounds in the body
@@ -73,13 +74,19 @@ export const calculateWeeklyConcentrations = (
         const data = compoundDataMap.get(protocol.compound);
         if (!data) continue;
 
-        const dosagesPerWeek = getDosagesPerWeek(protocol.frequency);
+        // For GH, the dosage is in IU/day, so frequency is always daily.
+        const dosagesPerWeek = data.name.includes('(GH)') ? 7 : getDosagesPerWeek(protocol.frequency);
         const weeklyDosage = protocol.dosage * dosagesPerWeek;
 
         // The "concentration" is a simplified score normalized to a reference dosage.
-        let referenceDosage = 500; // Default for AAS/SARMs
-        if (data.category === 'SERM') referenceDosage = 350; // e.g., 50mg/day * 7
-        if (data.category === 'Support') referenceDosage = 7; // e.g., 1mg/day * 7
+        let referenceDosage = 500; // Default for AAS/SARMs in mg/week
+        if (data.name.includes('(GH)')) {
+            referenceDosage = 21; // Reference: 3 IU/day * 7 days
+        } else if (data.category === 'SERM') {
+            referenceDosage = 350; // e.g., 50mg/day * 7
+        } else if (data.category === 'Support') {
+            referenceDosage = 7; // e.g., 1mg/day * 7
+        }
         
         const addedConcentration = weeklyDosage / referenceDosage;
         

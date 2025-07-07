@@ -2,6 +2,7 @@
  * @file This is the main orchestrator for the new dynamic, time-series simulation engine.
  * It coordinates the week-by-week execution of all sub-models.
  */
+import { nanoid } from 'nanoid';
 import { AppState, SimulationResult, PhysiqueDataPoint, BloodMarkerWeeklyHistory } from '../shared/types';
 import { calculateWeeklyConcentrations } from './pke';
 import { runHpsWeekSimulation } from './hps';
@@ -35,9 +36,10 @@ export const runSimulationEngine = (appState: AppState): SimulationResult => {
 
   let pkeResult: PkeResult = { activeConcentrations: new Map() };
   
-  // Track peak risk results for the final summary
-  let peakOhsResult: OhsResult | null = null;
-  let peakHpsResult: HpsResult | null = null;
+  // Initialize peak results with baseline values to handle zero-week cycles
+  const baselineHps = runHpsWeekSimulation({ activeConcentrations: new Map() }, false);
+  let peakOhsResult: OhsResult = runOhsWeekSimulation(profile, baselineHps, baselineMarkers);
+  let peakHpsResult: HpsResult = baselineHps;
 
   // --- Main Simulation Loop ---
   for (let week = 1; week <= totalSimulationWeeks; week++) {
@@ -48,8 +50,11 @@ export const runSimulationEngine = (appState: AppState): SimulationResult => {
     const isPctPhase = week > cycleDuration;
     const hpsWeeklyResult = runHpsWeekSimulation(pkeResult, isPctPhase);
 
-    // 3. MES: Calculate TDEE and calorie balance.
-    const mesResult = runMesSimulation(profile, nutrition, hpsWeeklyResult);
+    // 3. MES: Calculate TDEE and calorie balance using the current body composition.
+    const currentWeight = currentMuscleMassKg + currentFatMassKg;
+    const currentBfp = (currentFatMassKg / currentWeight) * 100;
+    const currentProfileForMes = { ...profile, weight: currentWeight, bfp: currentBfp };
+    const mesResult = runMesSimulation(currentProfileForMes, nutrition, hpsWeeklyResult);
     
     // 4. AMS: Calculate weekly change in body composition.
     const amsWeeklyResult = runAmsWeekSimulation(mesResult, hpsWeeklyResult);
@@ -64,7 +69,7 @@ export const runSimulationEngine = (appState: AppState): SimulationResult => {
 
     // Track the peak risk results (both OHS and HPS) for the final summary.
     // We use the highest cardiovascular score as a proxy for the week of peak risk.
-    if (!peakOhsResult || ohsWeeklyResult.riskScores.cardiovascular.score > peakOhsResult.riskScores.cardiovascular.score) {
+    if (ohsWeeklyResult.riskScores.cardiovascular.score > peakOhsResult.riskScores.cardiovascular.score) {
         peakOhsResult = ohsWeeklyResult;
         peakHpsResult = hpsWeeklyResult; // Capture the HPS state at the point of peak risk
     }
@@ -77,17 +82,10 @@ export const runSimulationEngine = (appState: AppState): SimulationResult => {
       finalFatLossKg: (profile.weight * (profile.bfp/100)) - currentFatMassKg,
   }
   
-  // Ensure peak results are not null before using them, providing a baseline if the loop didn't run.
-  if (!peakOhsResult || !peakHpsResult) {
-      const baselineHps = runHpsWeekSimulation({ activeConcentrations: new Map() }, false);
-      peakOhsResult = runOhsWeekSimulation(profile, baselineHps, baselineMarkers);
-      peakHpsResult = baselineHps;
-  }
-  
   const synthesisResult = synthesizeResults(appState, finalAmsResult, peakOhsResult, peakHpsResult);
   
   const finalResult: SimulationResult = {
-    id: `sim-${Date.now()}`,
+    id: `sim-${nanoid(8)}`,
     ...synthesisResult,
     physiqueProjection,
     bloodMarkerHistory,

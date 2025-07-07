@@ -6,13 +6,13 @@ import { AthleteProfile, NutritionPlan } from '../shared/types';
 import { HpsResult, MesResult } from './types';
 
 const GOAL_ACTIVITY_FACTORS: { [key: string]: number } = {
-  'Aggressive Muscle Gain (Bulk)': 1.55,
-  'Lean Muscle Gain': 1.55,
-  'Maintenance / Recomposition': 1.375,
-  'Moderate Fat Loss (Cut)': 1.375,
-  'Aggressive Fat Loss (Shred)': 1.55,
-  'Competition Preparation': 1.725,
-  'Anti-Aging / TRT': 1.2,
+  'goals.aggressive_bulk': 1.55,
+  'goals.lean_gain': 1.55,
+  'goals.recomposition': 1.375,
+  'goals.moderate_cut': 1.375,
+  'goals.aggressive_shred': 1.55,
+  'goals.competition_prep': 1.725,
+  'goals.anti_aging': 1.2,
 };
 
 /**

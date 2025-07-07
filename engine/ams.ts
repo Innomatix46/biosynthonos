@@ -31,9 +31,11 @@ export const runAmsWeekSimulation = (
 
   if (weeklyCalorieBalance < 0) {
     // In a deficit, the p-ratio determines muscle preservation.
-    // High anabolics reduce the proportion of the deficit coming from muscle.
-    pRatio = 1 - (0.5 - totalAnabolic * 0.04); // Base 50% loss from muscle, down to 10%
-    pRatio = Math.max(pRatio, 0.1); // At least 10% of deficit comes from muscle
+    // Higher anabolics mean less of the deficit is covered by muscle breakdown.
+    // Base loss from muscle is 50%, anabolics reduce this. A score of 50 would half the muscle loss.
+    const muscleLossProportion = 0.5 - (totalAnabolic * 0.004);
+    // pRatio here means the proportion of the deficit covered by muscle
+    pRatio = Math.max(0.1, muscleLossProportion); // At least 10% of deficit comes from muscle
   }
 
   let fatChangeKg = 0;
