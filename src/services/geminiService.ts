@@ -1,6 +1,3 @@
-
-
-
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { SimulationResult, PedProtocol, ProtocolPhase, AthleteProfile, TranslatableText, SuggestedProtocol, BloodWork } from '../shared/types';
 import { TFunction } from "i18next";
@@ -11,7 +8,9 @@ import { nanoid } from 'nanoid';
  * to provide advanced AI-driven analysis of simulation results and protocol suggestions.
  */
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Initialize the Google GenAI client
+// The API key is sourced from Vite's environment variables, which are available in the browser.
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 const constructAnalysisPrompt = (result: SimulationResult, t: TFunction): string => {
   const summaryData = {
@@ -50,20 +49,12 @@ const constructAnalysisPrompt = (result: SimulationResult, t: TFunction): string
 };
 
 export const getAiAnalysis = async (result: SimulationResult, t: TFunction): Promise<TranslatableText> => {
-  try {
     const prompt = constructAnalysisPrompt(result, t);
     const response: GenerateContentResponse = await ai.models.generateContent({
       model: 'gemini-2.5-flash-preview-04-17',
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
     });
     return response.text;
-  } catch (error) {
-    console.error("Error calling Gemini API for analysis:", error);
-    if (error instanceof Error && (error.message.includes('API_KEY_INVALID') || error.message.includes('API key not valid'))) {
-        return { key: 'errors.ai_api_key_invalid' };
-    }
-    return { key: 'errors.ai_analysis_failed' };
-  }
 };
 
 const constructSuggestionPrompt = (profile: AthleteProfile, t: TFunction): string => {
@@ -83,47 +74,38 @@ const constructSuggestionPrompt = (profile: AthleteProfile, t: TFunction): strin
 };
 
 export const getAiProtocolSuggestion = async (profile: AthleteProfile, t: TFunction): Promise<SuggestedProtocol | null> => {
-    try {
-        const prompt = constructSuggestionPrompt(profile, t);
-        const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash-preview-04-17',
-            contents: [{ role: 'user', parts: [{ text: prompt }] }],
-            config: { responseMimeType: "application/json" }
-        });
+    const prompt = constructSuggestionPrompt(profile, t);
+    const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash-preview-04-17',
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        config: { responseMimeType: "application/json" }
+    });
 
-        let jsonStr = response.text.trim();
-        const fenceRegex = /^```(\w*)?\s*\n?(.*?)\n?\s*```$/s;
-        const match = jsonStr.match(fenceRegex);
-        if (match && match[2]) {
-            jsonStr = match[2].trim();
-        }
-
-        const suggestion = JSON.parse(jsonStr);
-        
-        if (suggestion && Array.isArray(suggestion.protocolPhases)) {
-            suggestion.protocolPhases.forEach((phase: any) => {
-                phase.id = `phase-${nanoid()}`;
-                if (phase.compounds && Array.isArray(phase.compounds)) {
-                    phase.compounds.forEach((c: any) => c.id = `ped-${nanoid()}`);
-                }
-            });
-            if (suggestion.support && Array.isArray(suggestion.support)) {
-                suggestion.support.forEach((s: any) => s.id = `support-${nanoid()}`);
-            }
-            if (suggestion.pct && Array.isArray(suggestion.pct)) {
-                suggestion.pct.forEach((p: any) => p.id = `pct-${nanoid()}`);
-            }
-            return suggestion as SuggestedProtocol;
-        }
-        return null;
-
-    } catch (error) {
-        console.error("Error calling Gemini API for suggestion:", error);
-        const key = (error instanceof Error && (error.message.includes('API_KEY_INVALID') || error.message.includes('API key not valid')))
-            ? 'errors.ai_api_key_invalid_suggestion'
-            : 'errors.ai_suggestion_failed';
-        throw new Error(t(key));
+    let jsonStr = response.text.trim();
+    const fenceRegex = /^```(\w*)?\s*\n?(.*?)\n?\s*```$/s;
+    const match = jsonStr.match(fenceRegex);
+    if (match && match[2]) {
+        jsonStr = match[2].trim();
     }
+
+    const suggestion = JSON.parse(jsonStr);
+    
+    if (suggestion && Array.isArray(suggestion.protocolPhases)) {
+        suggestion.protocolPhases.forEach((phase: any) => {
+            phase.id = `phase-${nanoid()}`;
+            if (phase.compounds && Array.isArray(phase.compounds)) {
+                phase.compounds.forEach((c: any) => c.id = `ped-${nanoid()}`);
+            }
+        });
+        if (suggestion.support && Array.isArray(suggestion.support)) {
+            suggestion.support.forEach((s: any) => s.id = `support-${nanoid()}`);
+        }
+        if (suggestion.pct && Array.isArray(suggestion.pct)) {
+            suggestion.pct.forEach((p: any) => p.id = `pct-${nanoid()}`);
+        }
+        return suggestion as SuggestedProtocol;
+    }
+    return null;
 };
 
 // --- Lab Report OCR Service ---
@@ -134,7 +116,7 @@ const constructLabReportPrompt = (): string => {
         Respond ONLY with a valid JSON array of objects. Do not include markdown fences or any other text.
         The JSON schema for each object MUST be: { "marker": string, "value": string, "unit": string }.
         
-        Prioritize extracting these common markers if present: 'Testosterone' (any form), 'Estradiol', 'E2', 'Prolactin', 'LH', 'FSH', 'SHBG', 'ALT', 'SGPT', 'AST', 'SGOT', 'GGT', 'Total Cholesterol', 'HDL', 'LDL', 'Triglycerides', 'Glucose', 'eGFR', 'Creatinine', 'BUN', 'Hematocrit', 'Hemoglobin', 'RBC'.
+        Prioritize extracting these common markers if present: 'Testosterone' (any form), 'Estradiol', 'E2', 'LH', 'FSH', 'ALT', 'SGPT', 'AST', 'SGOT', 'HDL', 'LDL', 'Glucose', 'eGFR', 'Systolic', 'Diastolic'.
         
         Example of a valid response:
         [
@@ -147,8 +129,6 @@ const constructLabReportPrompt = (): string => {
 
 const MARKER_MAP: { [key: string]: keyof BloodWork } = {
     'testosterone': 'totalTestosterone',
-    'estradiol': 'totalTestosterone', // Mapping to Test as a limitation of current BloodWork type
-    'e2': 'totalTestosterone', // Mapping to Test as a limitation of current BloodWork type
     'alt': 'alt',
     'sgpt': 'alt',
     'ast': 'ast',
@@ -163,7 +143,6 @@ const MARKER_MAP: { [key: string]: keyof BloodWork } = {
 
 const findBloodWorkKey = (markerName: string): keyof BloodWork | null => {
     const lowerCaseName = markerName.toLowerCase();
-    // Use word boundaries to avoid partial matches like 'ast' in 'masteron'
     for (const key in MARKER_MAP) {
         const regex = new RegExp(`\\b${key}\\b`);
         if (regex.test(lowerCaseName)) {
