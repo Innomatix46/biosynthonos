@@ -4,30 +4,33 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Critical security enhancement: Content Security Policy (CSP) -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://generativelanguage.googleapis.com; img-src 'self' data: blob:; font-src 'self';">
+    <!-- Kritische Sicherheitsverbesserung: Content Security Policy (CSP) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh; style-src 'self' 'unsafe-inline'; connect-src 'self' https://generativelanguage.googleapis.com https://esm.sh; img-src 'self' data: blob:; media-src 'self' blob:;">
     <title>BioSynthonos: Virtual Athlete Simulator</title>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.2.0",  // <-- KORREKT
-    "react-dom": "https://esm.sh/react-dom@18.2.0", // <-- KORREKT
-    ...
-    // Ab hier beginnen die automatisch und FALSCH hinzugefügten Einträge:
-    "react/": "https://esm.sh/react@^19.1.0/",              // <-- KONFLIKT & FALSCHE VERSION
-    "vite": "https://esm.sh/vite@^7.0.2",                   // <-- devDependency, gehört nicht hierher!
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^4.6.0", // <-- devDependency!
-    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",      // <-- KONFLIKT & FALSCHE VERSION
-    "@jest/globals": "https://esm.sh/@jest/globals@^30.0.4" // <-- devDependency!
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.2.0",
+      "react-dom": "https://esm.sh/react-dom@18.2.0",
+      "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+      "@google/genai": "https://esm.sh/@google/genai@1.8.0",
+      "html-to-image": "https://esm.sh/html-to-image@1.11.11",
+      "i18next": "https://esm.sh/i18next@23.11.5",
+      "i18next-browser-languagedetector": "https://esm.sh/i18next-browser-languagedetector@8.0.0",
+      "jspdf": "https://esm.sh/jspdf@2.5.1",
+      "lucide-react": "https://esm.sh/lucide-react@0.400.0",
+      "nanoid": "https://esm.sh/nanoid@5.0.7",
+      "react-i18next": "https://esm.sh/react-i18next@14.1.2",
+      "recharts": "https://esm.sh/recharts@2.12.7"
+    }
   }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
-</head>
+  </script>
+  <link rel="stylesheet" href="/index.css">
+  </head>
   <body>
-    <!-- The root element where the React application will be mounted -->
+    <!-- Das Root-Element, in das die React-Anwendung gemountet wird -->
     <div id="root"></div>
+    <!-- Laden Sie NUR den Haupteinstiegspunkt aus dem /src-Verzeichnis. -->
     <script type="module" src="/src/main.tsx"></script>
-  <script type="module" src="/index.tsx"></script>
-</body>
+  </body>
 </html>
