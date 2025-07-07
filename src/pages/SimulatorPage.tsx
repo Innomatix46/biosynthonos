@@ -1,5 +1,4 @@
 
-
 /**
  * @file This page component encapsulates all logic and state for the simulation feature.
  * It manages profiles, inputs, results, and interactions with the simulation engine and AI services.
@@ -7,7 +6,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AppState, SimulationResult, BloodWork, LabReport } from '../shared/types';
-import { runSimulationEngine } from '../engine';
+import { runSimulationEngine } from '../engine/index';
 import { getAiAnalysis, getAiProtocolSuggestion } from '../services/geminiService';
 import { InputPanel } from '../components/InputPanel';
 import { ResultsPanel } from '../components/ResultsPanel';
@@ -88,11 +87,20 @@ export const SimulatorPage: React.FC = () => {
   };
 
   const handleGetAiAnalysis = async (resultId: string) => {
-    setSimulationResults(prev => prev.map(r => r.id === resultId ? { ...r, aiAnalysis: { key: 'loading' } } : r));
     const targetResult = simulationResults.find(r => r.id === resultId);
     if (!targetResult) return;
-    const analysis = await getAiAnalysis(targetResult, t);
-    setSimulationResults(prev => prev.map(r => r.id === resultId ? { ...r, aiAnalysis: analysis } : r));
+    
+    setSimulationResults(prev => prev.map(r => r.id === resultId ? { ...r, aiAnalysis: { key: 'loading' } } : r));
+    
+    try {
+        const analysis = await getAiAnalysis(targetResult, t);
+        setSimulationResults(prev => prev.map(r => r.id === resultId ? { ...r, aiAnalysis: analysis } : r));
+    } catch (error) {
+        console.error("AI Analysis failed:", error);
+        const errorMessage = error instanceof Error ? error.message : t('errors.ai_analysis_failed');
+        toast.error(errorMessage);
+        setSimulationResults(prev => prev.map(r => r.id === resultId ? { ...r, aiAnalysis: null } : r));
+    }
   };
 
   const handleSaveProfile = () => {
@@ -156,7 +164,7 @@ export const SimulatorPage: React.FC = () => {
     };
 
     const currentReports = appState.labReports || [];
-    handleInputChange('labReports', [...currentReports, newReport]);
+    handleInputChange('labReports', [newReport, ...currentReports]);
     
     toast.success(t('lab_import.success_applied'));
     setIsImportModalOpen(false);
